@@ -3,8 +3,7 @@ import { ProjectUtils } from "@/models/projects";
 import { SingleProjectInformations, SingleProjectInformationsColumn, StackDivider } from "./styled";
 import { Description, Features, Header, Links, ProjectsSwitch } from "./parts";
 
-import Comments from "./Comments";
-import AddCommentButton from "./Comment/AddCommentButton";
+import { Comments, AddCommentButton } from "./Comments";
 
 // import { test } from "@/utils/test";
 

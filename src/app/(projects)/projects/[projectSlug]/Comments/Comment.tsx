@@ -9,7 +9,7 @@ import Gravatar from "./Gravatar";
 
 import { Box, Typography } from "@mui/material";
 import { CommentType } from "@/types";
-import { Actions, Author, CommentDivider, CommentPaper, SummaryStack, When } from "./Comment.style";
+import { Actions, Author, CommentDivider, CommentPaper, SummaryStack, When } from "./Comments.style";
 
 // import { useAuthContext } from "@/contexts";
 

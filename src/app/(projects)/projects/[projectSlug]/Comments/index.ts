@@ -1,1 +1,3 @@
-export { default } from "./Comments";
+import AddCommentButton from "./AddCommentButton";
+import Comments from "./Comments";
+export { Comments, AddCommentButton };

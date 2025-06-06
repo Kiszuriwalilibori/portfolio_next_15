@@ -7,11 +7,9 @@ import { CommentType } from "@/types";
 import { useBoolean, useMessage } from "@/hooks";
 import { requestLogin } from "@/fbase";
 import { useFirebaseAuth } from "@/contexts";
-import { CommentsButton } from "./Comment.style";
-import { CommentInputModal } from "../AddComment/CommentInputModal";
-import { CommentsStack } from "../Comments/Comments.style";
-
-import Comment from ".";
+import { CommentsButton, CommentsStack } from "./Comments.style";
+import { CommentInputModal } from "./CommentInputModal";
+import { Comment } from "../Comments/Comment";
 
 interface Props {
     title: string;
@@ -79,6 +77,3 @@ export const AddCommentButton = (props: Props) => {
 };
 
 export default AddCommentButton;
-
-// <SnackbarContainer dense={false} anchorOrigin={{vertical:"top", ...}} classes={undefined}>
-// >                             <div className="notistack-SnackbarContainer go3118922589 go4034260886 go1141946668"></div>

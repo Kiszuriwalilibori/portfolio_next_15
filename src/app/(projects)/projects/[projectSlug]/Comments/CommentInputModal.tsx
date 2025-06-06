@@ -1,13 +1,16 @@
 "use client";
 
 import Button from "@mui/material/Button";
+
 import { useCallback, useEffect, useState } from "react";
+
 import Modal from "@/components/modal";
-import { ModalProps, CommentType } from "@/types";
-import { ButtonsStack, CommentTextField, MicrophoneButton, listeningMicrophoneSx } from "./CommentInputModal.style";
-import { useComment, useMessage, useSpeech } from "@/hooks";
-import { processComment } from "./utils";
 import Icons from "@/components/common/icons";
+
+import { ModalProps, CommentType } from "@/types";
+import { ButtonsStack, CommentTextField, MicrophoneButton, listeningMicrophoneSx } from "./Comments.style";
+import { useComment, useMessage, useSpeech } from "@/hooks";
+import { validateAndSubmitComment } from "../AddComment/utils";
 
 interface Props extends Omit<ModalProps, "title"> {
     author: string;
@@ -117,7 +120,7 @@ export const CommentInputModal = (props: Props) => {
             }
             actions={
                 <ButtonsStack direction="row" spacing={2} id="Buttons stack">
-                    <Button disabled={comment === INITIAL_COMMENT || isSubmitting} color="success" variant="contained" onClick={() => processComment(comment, sendComment, handleInvalidComment, showMessage)} id="accept-button">
+                    <Button disabled={comment === INITIAL_COMMENT || isSubmitting} color="success" variant="contained" onClick={() => validateAndSubmitComment(comment, sendComment, handleInvalidComment, showMessage)} id="accept-button">
                         Accept
                     </Button>
                     <Button disabled={comment === INITIAL_COMMENT} variant="contained" color="warning" onClick={clearComment} id="clear-button">

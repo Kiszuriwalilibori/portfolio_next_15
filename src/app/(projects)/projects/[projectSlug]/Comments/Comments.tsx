@@ -1,12 +1,8 @@
-import Comment from "../Comment";
-
-import { getComments } from "./getComments";
-import { CommentType } from "@/types";
 import { CommentsStack } from "./Comments.style";
-
-function sortCommentsByCreated(comments: CommentType[]): CommentType[] {
-    return [...comments].sort((a, b) => a.created - b.created);
-}
+import { getComments } from "./utils/getComments";
+import { CommentType } from "@/types";
+import { Comment } from "./Comment";
+import { sortCommentsByCreated } from "./utils/sortComments";
 
 interface Props {
     projectID: string;
