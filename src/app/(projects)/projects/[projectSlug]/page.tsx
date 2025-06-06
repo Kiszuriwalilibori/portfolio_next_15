@@ -4,7 +4,7 @@ import { SingleProjectInformations, SingleProjectInformationsColumn, StackDivide
 import { Description, Features, Header, Links, ProjectsSwitch } from "./parts";
 
 import Comments from "./Comments";
-import AddCommentsButton from "./Comment/AddCommentsButton";
+import AddCommentButton from "./Comment/AddCommentButton";
 
 // import { test } from "@/utils/test";
 
@@ -30,7 +30,7 @@ export default async function ProjectDetails({ params }: { params: Promise<{ pro
             <SingleProjectInformations direction={{ md: "row" }} divider={<StackDivider />}>
                 <SingleProjectInformationsColumn>
                     <Links github={project.github} live={project.live} />
-                    <AddCommentsButton ID={project.ID} title={project.title} />
+                    <AddCommentButton ID={project.ID} title={project.title} />
 
                     <Comments projectID={project.ID} title={project.title} />
                 </SingleProjectInformationsColumn>

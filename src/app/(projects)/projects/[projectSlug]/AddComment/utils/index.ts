@@ -1,4 +1,4 @@
-import { checkValidity } from "./checkValidity";
-import processComment from "./processComment";
+import { validateCommentIntents } from "./validateCommentIntents";
+import validateAndSubmitComment from "./ValidateAndSubmitComment";
 
-export { checkValidity, processComment };
+export { validateCommentIntents, validateAndSubmitComment };

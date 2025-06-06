@@ -36,3 +36,5 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 to co jest opisane jak section aria-label navigation-container wyświetla się puste i w dziwnym miejscu - niby nie błąd ale nie powinno tak być
+
+//TODO: do rozważenia czy ten optimistic update jest potrzebny w przypadku dodawania komentarzy

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { checkValidity } from "./checkValidity";
+import { validateCommentIntents } from "./validateCommentIntents";
 import { MessageMethods } from "@/hooks/useMessage";
 
 let lastRequestTime = 0;
@@ -17,7 +17,7 @@ const config = {
     },
 };
 
-export const processComment = async (comment: string, onSuccess: (comment: string) => Promise<void>, handleInvalidComment: () => void, showMessage: MessageMethods): Promise<void> => {
+export const validateAndSubmitComment = async (comment: string, onSuccess: (comment: string) => Promise<void>, handleInvalidComment: () => void, showMessage: MessageMethods): Promise<void> => {
     const currentTime = Date.now();
     if (currentTime - lastRequestTime < MIN_REQUEST_INTERVAL) {
         showMessage.warning("Please wait a moment before submitting another comment.");
@@ -33,7 +33,7 @@ export const processComment = async (comment: string, onSuccess: (comment: strin
         });
 
         const intents = response.data.attributeScores;
-        const isCommentValid = checkValidity(intents);
+        const isCommentValid = validateCommentIntents(intents);
 
         if (isCommentValid) {
             await onSuccess(comment);
@@ -45,4 +45,4 @@ export const processComment = async (comment: string, onSuccess: (comment: strin
         await onSuccess(comment);
     }
 };
-export default processComment;
+export default validateAndSubmitComment;
