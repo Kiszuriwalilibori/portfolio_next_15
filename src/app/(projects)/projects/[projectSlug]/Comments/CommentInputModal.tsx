@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import Modal from "@/components/modal";
 import Icons from "@/components/common/icons";
 
-import { ModalProps, CommentType } from "@/types";
+import { ModalProps } from "@/types";
 import { ButtonsStack, CommentTextField, MicrophoneButton, listeningMicrophoneSx } from "./Comments.style";
 import { useComment, useMessage, useSpeech } from "@/hooks";
 import { validateAndSubmitComment } from "../AddComment/utils";
@@ -17,7 +17,7 @@ interface Props extends Omit<ModalProps, "title"> {
     project: string;
     authorEmail: string;
     ID: string;
-    onCommentAdded?: (comment: CommentType | null) => void;
+    onCommentAdded?: () => void;
 }
 
 const INITIAL_COMMENT = "" as string;
@@ -54,13 +54,12 @@ export const CommentInputModal = (props: Props) => {
             return;
         }
         setIsSubmitting(true);
-        const newCommentInfo: CommentType = {
+        const newCommentInfo = {
             author,
             active: true,
             content: comment,
             created: Date.now(),
             authorEmail,
-            ID: `temp-${Date.now()}`,
             project,
             projectID: ID,
         };
@@ -77,7 +76,7 @@ export const CommentInputModal = (props: Props) => {
             }
 
             if (onCommentAdded) {
-                onCommentAdded(newCommentInfo);
+                onCommentAdded();
             }
 
             handleSuccess();
@@ -85,9 +84,6 @@ export const CommentInputModal = (props: Props) => {
             onClose();
         } catch (error) {
             handleError(error instanceof Error ? error.message : "Unknown error");
-            if (onCommentAdded) {
-                onCommentAdded(null);
-            }
         } finally {
             setIsSubmitting(false);
         }

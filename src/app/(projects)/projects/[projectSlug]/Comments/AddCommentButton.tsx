@@ -1,15 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
-import { CommentType } from "@/types";
 import { useBoolean, useMessage } from "@/hooks";
 import { requestLogin } from "@/fbase";
 import { useFirebaseAuth } from "@/contexts";
-import { CommentsButton, CommentsStack } from "./Comments.style";
+import { CommentsButton } from "./Comments.style";
 import { CommentInputModal } from "./CommentInputModal";
-import { Comment } from "../Comments/Comment";
 
 interface Props {
     title: string;
@@ -21,8 +18,7 @@ export const AddCommentButton = (props: Props) => {
     const [isModalOpen, openModal, closeModal] = useBoolean(false);
     const { user, isLogged } = useFirebaseAuth();
     const showMessage = useMessage();
-    const [optimisticComments, setOptimisticComments] = useState<CommentType[]>([]);
-    const [refreshKey, setRefreshKey] = useState(0);
+
     const router = useRouter();
 
     const handleLeaveACommentClick = useCallback(() => {
@@ -36,23 +32,10 @@ export const AddCommentButton = (props: Props) => {
         }
     }, [isLogged, user, openModal, showMessage]);
 
-    const handleCommentAdded = useCallback(
-        (comment: CommentType | null) => {
-            if (comment === null) {
-                setOptimisticComments([]);
-                return;
-            }
-            setOptimisticComments([comment]);
-            setRefreshKey(prev => prev + 1);
-
-            router.refresh();
-            closeModal();
-        },
-        [router]
-    );
-    useEffect(() => {
-        setOptimisticComments([]);
-    }, [refreshKey, ID]);
+    const handleCommentAdded = useCallback(() => {
+        router.refresh();
+        closeModal();
+    }, [router]);
 
     const commentsContainer = typeof document !== "undefined" ? document.getElementById("comments-stack") : null;
 
@@ -61,15 +44,6 @@ export const AddCommentButton = (props: Props) => {
             <CommentsButton variant="contained" onClick={handleLeaveACommentClick} id="add-comment-button" aria-label="Leave a comment on the project">
                 Leave a comment
             </CommentsButton>
-            {commentsContainer &&
-                createPortal(
-                    <CommentsStack spacing={1}>
-                        {optimisticComments.map(comment => (
-                            <Comment comment={comment} key={comment.ID} />
-                        ))}
-                    </CommentsStack>,
-                    commentsContainer
-                )}
 
             {isModalOpen && user && <CommentInputModal isOpen={isModalOpen} onClose={closeModal} author={user.displayName || "Anonymous"} authorEmail={user.email || ""} project={title} ID={ID} onCommentAdded={handleCommentAdded} />}
         </>
