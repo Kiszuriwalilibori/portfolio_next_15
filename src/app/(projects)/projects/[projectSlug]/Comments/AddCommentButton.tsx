@@ -37,8 +37,6 @@ export const AddCommentButton = (props: Props) => {
         closeModal();
     }, [router]);
 
-    const commentsContainer = typeof document !== "undefined" ? document.getElementById("comments-stack") : null;
-
     return (
         <>
             <CommentsButton variant="contained" onClick={handleLeaveACommentClick} id="add-comment-button" aria-label="Leave a comment on the project">

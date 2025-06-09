@@ -41,4 +41,3 @@ export default async function Comments({ projectID, title }: Props) {
         </>
     );
 }
-//TODO: do rozważenia czy ten optimistic update jest potrzebny w przypadku dodawania komentarzy
