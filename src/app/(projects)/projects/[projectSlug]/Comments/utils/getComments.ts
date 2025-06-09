@@ -1,5 +1,5 @@
 import { getDocs, collection, query, where, getFirestore } from "firebase/firestore";
-import firebase_app, { db } from "@/fbase/config";
+import firebase_app from "@/fbase/config";
 import { CommentType } from "@/types";
 
 interface FetchError {
@@ -20,12 +20,15 @@ export async function getComments(projectID: string): Promise<GetCommentsResult>
     try {
         const commentsQuery = query(collection(db, "comments"), where("projectID", "==", projectID));
         const querySnapshot = await getDocs(commentsQuery);
+        // if (querySnapshot.empty) {
+        //     return { comments: [], error: null }; // No comments found
+        // }
 
         comments = querySnapshot.docs.map(
             doc =>
                 ({
-                    ID: doc.id,
                     ...doc.data(),
+                    ID: doc.id,
                 } as CommentType)
         );
     } catch (err) {

@@ -18,6 +18,8 @@ export default async function Comments({ projectID, title }: Props) {
 
     const sortedComments = sortCommentsByCreated(comments);
 
+    console.log("Sorted comments:", sortedComments);
+
     if (error) {
         return (
             <>

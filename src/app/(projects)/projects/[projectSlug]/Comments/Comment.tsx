@@ -2,40 +2,20 @@
 
 import moment from "moment";
 import Gravatar from "./Gravatar";
-// import Gravatar from "react-gravatar";
-// import removeComment from "fbase/firestore/removeComment";
 
-// import { MouseEventHandler, useCallback } from "react";
+// // import { MouseEventHandler, useCallback } from "react";
 
 import { Box, Typography } from "@mui/material";
 import { CommentType } from "@/types";
-import { Actions, Author, CommentDivider, CommentPaper, SummaryStack, When } from "./Comments.style";
+import { Author, CommentDivider, CommentPaper, SummaryStack, When } from "./Comments.style";
 
-// import { useAuthContext } from "@/contexts";
-
-// import { useMessage } from "@/hooks";
-import Icons from "@/components/common/icons";
+import CommentActions from "./CommentActions";
 
 interface Props {
     comment: CommentType;
 }
 export const Comment = (props: Props) => {
     const { comment } = props;
-    //     const { user, isLogged } = useAuthContext();
-    //     const showMessage = useMessage();
-
-    //     const handleError = useCallback((message: string) => {
-    //         showMessage.error("Error: " + message);
-    //     }, []);
-
-    //     const handleSuccess = useCallback(() => {
-    //         showMessage.success("Your comment has been removed");
-    //     }, []);
-
-    //     const handleRemoveComment = useCallback(() => {
-    //         removeComment(comment.ID, handleSuccess, handleError);
-    //         // eslint-disable-next-line react-hooks/exhaustive-deps
-    //     }, [comment.ID]);
 
     return (
         <CommentPaper>
@@ -50,7 +30,7 @@ export const Comment = (props: Props) => {
             </Box>
 
             <CommentDivider />
-            <Actions>{/* TODO tu content od atentykacji                */}</Actions>
+            <CommentActions commentId={comment.ID} commentAuthor={comment.author} />
         </CommentPaper>
     );
 };
