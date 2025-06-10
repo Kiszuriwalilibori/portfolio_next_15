@@ -41,10 +41,10 @@ const CommentActions = ({ commentId, commentAuthor, projectID }: Props) => {
         setIsRemoving(true);
         showMessage.info("Removing comment...");
         try {
-            const response = await fetch(`/api/comments/${commentId}`, {
+            const response = await fetch(`/api/remove-comment`, {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ projectID }),
+                body: JSON.stringify({ projectID, commentId }),
             });
 
             if (!response.ok) {
