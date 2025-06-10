@@ -64,7 +64,7 @@ export const CommentInputModal = (props: Props) => {
             projectID: ID,
         };
         try {
-            const response = await fetch("/api/comments", {
+            const response = await fetch("/api/add-comment", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newCommentInfo),
