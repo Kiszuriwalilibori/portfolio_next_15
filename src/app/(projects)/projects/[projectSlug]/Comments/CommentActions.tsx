@@ -1,26 +1,28 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useFirebaseAuth } from "@/contexts";
 import { useMessage } from "@/hooks";
 import Icons from "@/components/common/icons";
-import removeComment from "@/fbase/firestore/removeComment";
 import { Actions, RemoveButton } from "./Comments.style";
 
 interface Props {
     commentId: string;
     commentAuthor: string;
+    projectID: string;
 }
 
-const CommentActions = ({ commentId, commentAuthor }: Props) => {
+const CommentActions = ({ commentId, commentAuthor, projectID }: Props) => {
     const { user, isLogged } = useFirebaseAuth();
+    const [isRemoving, setIsRemoving] = useState(false);
     const router = useRouter();
     const showMessage = useMessage();
 
     const handleError = useCallback(
         (message: string) => {
             showMessage.error("Error: " + message);
+            setIsRemoving(false);
         },
         [showMessage]
     );
@@ -28,11 +30,33 @@ const CommentActions = ({ commentId, commentAuthor }: Props) => {
     const handleSuccess = useCallback(() => {
         showMessage.success("Your comment has been removed");
         router.refresh();
-    }, [showMessage]);
+        setIsRemoving(false);
+    }, [showMessage, router]);
 
-    const handleRemoveComment = useCallback(() => {
-        removeComment(commentId, handleSuccess, handleError);
-    }, [commentId, handleSuccess, handleError]);
+    const handleRemoveComment = useCallback(async () => {
+        if (isRemoving) {
+            showMessage.warning("Comment is already being removed");
+            return;
+        }
+        setIsRemoving(true);
+        showMessage.info("Removing comment...");
+        try {
+            const response = await fetch(`/api/comments/${commentId}`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ projectID }),
+            });
+
+            if (!response.ok) {
+                const { error } = await response.json();
+                throw new Error(error || "Failed to removed comment");
+            }
+
+            handleSuccess();
+        } catch (error) {
+            handleError(error instanceof Error ? error.message : "Unknown error");
+        }
+    }, [commentId, projectID, handleSuccess, handleError]);
 
     if (!isLogged || !user || user.displayName !== commentAuthor) {
         return <Actions />;

@@ -1,10 +1,5 @@
-// "use client";
-
 import moment from "moment";
 import Gravatar from "./Gravatar";
-
-// // import { MouseEventHandler, useCallback } from "react";
-
 import { Box, Typography } from "@mui/material";
 import { CommentType } from "@/types";
 import { Author, CommentDivider, CommentPaper, SummaryStack, When } from "./Comments.style";
@@ -13,9 +8,10 @@ import CommentActions from "./CommentActions";
 
 interface Props {
     comment: CommentType;
+    projectID: string;
 }
 export const Comment = (props: Props) => {
-    const { comment } = props;
+    const { comment, projectID } = props;
 
     return (
         <CommentPaper>
@@ -30,7 +26,7 @@ export const Comment = (props: Props) => {
             </Box>
 
             <CommentDivider />
-            <CommentActions commentId={comment.ID} commentAuthor={comment.author} />
+            <CommentActions commentId={comment.ID} commentAuthor={comment.author} projectID={projectID} />
         </CommentPaper>
     );
 };
