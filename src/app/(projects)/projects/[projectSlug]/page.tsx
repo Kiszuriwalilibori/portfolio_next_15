@@ -7,6 +7,8 @@ import { Comments, AddCommentButton } from "./Comments";
 
 // import { test } from "@/utils/test";
 
+import type { Metadata } from "next";
+
 export async function generateStaticParams() {
     return projects.map(project => ({
         projectSlug: project.slug,
